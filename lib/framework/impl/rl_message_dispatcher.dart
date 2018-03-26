@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class RLMessageDispatcher implements IMessageDispatcher{
+class RLEventDispatcher implements IMessageDispatcher{
   //-----------------------------------
   //
   // Public Properties
@@ -15,53 +15,50 @@ class RLMessageDispatcher implements IMessageDispatcher{
   //
   //-----------------------------------
 
-  void addMessageHandler(dynamic message, Function handler) {
-    final List messageHandlers = _handlers[message];
+  void addEventListener(dynamic event, EventListener handler) {
+    final List messageHandlers = _handlers[event];
     if (messageHandlers != null) {
       if (!messageHandlers.contains(handler)) messageHandlers.add(handler);
     } else {
-      _handlers[message] = [handler];
+      _handlers[event] = [handler];
     }
   }
 
-  bool hasMessageHandler(dynamic message) {
-    return (_handlers[message] != null);
+  bool hasEventListener(dynamic event) {
+    return (_handlers[event] != null);
   }
 
-  void removeMessageHandler(dynamic message, Function handler) {
-    final List messageHandlers = _handlers[message];
+  void removeEventListener(dynamic event, EventListener handler) {
+    final List messageHandlers = _handlers[event];
     int index =
         (messageHandlers != null) ? messageHandlers.indexOf(handler) : -1;
     if (index != -1) {
       messageHandlers.removeAt(index);
-      if (messageHandlers.length == 0) _handlers.remove(message);
+      if (messageHandlers.length == 0) _handlers.remove(event);
     }
   }
 
-  void dispatchMessage(dynamic message,
-      [Function callback = null, bool reverse = false]) {
-    List handlers = _handlers[message];
+  void dispatchEvent(dynamic event,{bool reverse = false, dynamic payload}) {
+    List<EventListener> handlers = _handlers[event];
     if (handlers != null) {
-      new RLMessageRunner(message, handlers, callback).run();
-    } else {
-      if (callback != null) safelyCallback(callback);
+      new RLEventRunner(event, handlers, payload).run();
     }
   }
 }
 
 
-class RLMessageRunner {
+class RLEventRunner {
   //-----------------------------------
   //
   // Private Properties
   //
   //-----------------------------------
 
-  dynamic _message;
+  dynamic _event;
 
-  List _handlers;
+  List<EventListener> _handlers;
 
-  Function _callback;
+  dynamic _payload;
 
   //-----------------------------------
   //
@@ -69,7 +66,7 @@ class RLMessageRunner {
   //
   //-----------------------------------
 
-  RLMessageRunner(this._message, this._handlers, this._callback);
+  RLEventRunner(this._event, this._handlers, this._payload);
 
   //-----------------------------------
   //
@@ -88,17 +85,15 @@ class RLMessageRunner {
   //-----------------------------------
 
   void _next() {
-    Function handler = _handlers.removeLast();
+    EventListener handler = _handlers.removeLast();
 
     while (handler != null) {
-      handler();
+      handler(_event,_payload);
 
       if (_handlers.length > 0)
         handler = _handlers.removeLast();
       else
         handler = null;
     }
-
-    if (_callback != null) safelyCallback(_callback, null, _message);
   }
 }
