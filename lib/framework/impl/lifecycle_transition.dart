@@ -9,11 +9,9 @@ class LifecycleTransition {
 
   final List<String> _fromStates = new List<String>();
 
-  final RLMessageDispatcher _dispatcher = new RLMessageDispatcher();
-
   final List _callbacks = [];
 
-  Symbol _name;
+  dynamic _eventName;
 
   Lifecycle _lifecycle;
 
@@ -21,13 +19,11 @@ class LifecycleTransition {
 
   String _finalState;
 
-  Symbol _preTransitionMessage;
+  Symbol _preTransitionEvent;
 
-  Symbol _transitionMessage;
+  Symbol _transitionEvent;
 
-  Symbol _postTransitionMessage;
-
-  String _initialState;
+  Symbol _postTransitionEvent;
 
   bool _reverse = false;
 
@@ -37,7 +33,7 @@ class LifecycleTransition {
   //
   //-----------------------------------
 
-  LifecycleTransition(this._name, this._lifecycle);
+  LifecycleTransition(this._eventName, this._lifecycle);
 
   //-----------------------------------
   //
@@ -59,15 +55,15 @@ class LifecycleTransition {
   }
 
   //TODO
-  LifecycleTransition withMessages(Symbol preTransitionMessage,
-      Symbol transitionMessage, Symbol postTransitionMessage) {
-    _preTransitionMessage = preTransitionMessage;
-    _transitionMessage = transitionMessage;
-    _postTransitionMessage = postTransitionMessage;
+  LifecycleTransition withEvents(dynamic preTransitionevent,
+      dynamic transitionEvent, dynamic postTransitionEvent) {
+    _preTransitionEvent = preTransitionevent;
+    _transitionEvent = transitionEvent;
+    _postTransitionEvent = postTransitionEvent;
 
     if (_reverse)
       _lifecycle._addReversedEventTypes(
-          [preTransitionMessage, transitionMessage, postTransitionMessage]);
+          [preTransitionevent, transitionEvent, postTransitionEvent]);
 
     return this;
   }
@@ -78,15 +74,14 @@ class LifecycleTransition {
     return this;
   }
 
-  LifecycleTransition addBeforeHandler(Function handler) {
-    _dispatcher.addMessageHandler(_name, handler);
+  LifecycleTransition addBeforeHandler(EventListener handler) {
+    _lifecycle.addEventListener(_eventName, handler);
     return this;
   }
 
-  void enter([Function callback = null]) {
+  void enter([EmptyCallback callback]) {
     if (_lifecycle.state == _finalState) {
-      if (callback != null) safelyCallback(callback, null, _name);
-
+      callback();
       return;
     }
 
@@ -96,39 +91,36 @@ class LifecycleTransition {
     }
 
     if (_invalidTransition()) {
-      _reportError("Invalid transition", [callback]);
+      _reportError("Invalid transition");
       return;
     }
-
-    _initialState = _lifecycle.state;
 
     if (callback != null) _callbacks.add(callback);
 
     _setState(_transitionState);
 
-    _dispatcher.dispatchMessage(_name, enterCallback, _reverse);
+    _lifecycle.dispatchEvent(_eventName, reverse: _reverse);
+    enterCallback();
+
   }
 
-  void enterCallback(error) {
-    if (error != null) {
-      _setState(_initialState);
-      _reportError(error, _callbacks);
-      return;
-    }
+  EmptyCallback enterCallback() {
 
-    _dispatch(_preTransitionMessage);
-    _dispatch(_transitionMessage);
+    _dispatch(_preTransitionEvent);
+    _dispatch(_transitionEvent);
 
     _setState(_finalState);
 
-    final List callbacks = _callbacks;
+    final List<EmptyCallback> callbacks = _callbacks;
     _callbacks.length = 0;
 
-    callbacks.forEach((callback) {
-      safelyCallback(callback, null, _name);
+    callbacks.forEach((EmptyCallback callback) {
+      callback();
     });
 
-    _dispatch(_postTransitionMessage);
+    _dispatch(_postTransitionEvent);
+
+    return null;
   }
 
   //-----------------------------------
@@ -146,12 +138,21 @@ class LifecycleTransition {
     if (state != null) _lifecycle.setCurrentState(state);
   }
 
-  void _dispatch(Symbol messageName) {
-    if (messageName != '' && _lifecycle.hasEventListener(messageName))
-      _lifecycle.dispatchEvent(messageName);
+  void _dispatch(dynamic event) {
+    if (event != '' && _lifecycle.hasEventListener(event))
+      _lifecycle.dispatchEvent(event);
   }
 
-  void _reportError(dynamic message, List callbacks) {
-    // TODO
+  void _reportError(String message, [ErrorCallback callbacks]) {
+    if (_lifecycle.hasEventListener(LifecycleEvent.ERROR))
+    {
+      _lifecycle.dispatchEvent(LifecycleEvent.ERROR,payload: message);
+    }
+    else
+    {
+      LifecycleError error = new LifecycleError(message);
+      throw error;
+    }
+
   }
 }

@@ -32,7 +32,7 @@ class ConfigManager {
     addConfigHandler(new ObjectMatcher(), _handleObject);
 
     (context as MessageDispatcher)
-        .addListener(LifecycleMessage.INITIALIZE, _initialize, -100);
+        .addListener(LifecycleEvent.INITIALIZE, _initialize, -100);
   }
 
   //-----------------------------------

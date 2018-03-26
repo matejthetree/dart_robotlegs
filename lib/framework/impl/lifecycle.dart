@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class Lifecycle implements ILifecycle {
+class Lifecycle extends RLEventDispatcher implements ILifecycle {
   //-----------------------------------
   //
   // Public Properties
@@ -45,18 +45,13 @@ class Lifecycle implements ILifecycle {
 
   LifecycleTransition _destroy;
 
-  MessageDispatcher _dispatcher;
-
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
 
-  Lifecycle(this._target) {
-    if (target != null) _dispatcher = target as MessageDispatcher;
-    /*else
-			_dispatcher = this;*/
+  Lifecycle() {
 
     _configureTransitions();
   }
@@ -67,121 +62,93 @@ class Lifecycle implements ILifecycle {
   //
   //-----------------------------------
 
-  void initialize([Function callback = null]) {
+  void initialize([EmptyCallback callback]) {
     _initialize.enter(callback);
   }
 
-  void suspend([Function callback = null]) {
+  void suspend([EmptyCallback callback]) {
     _suspend.enter(callback);
   }
 
-  void resume([Function callback = null]) {
+  void resume([EmptyCallback callback]) {
     _resume.enter(callback);
   }
 
-  void destroy([Function callback = null]) {
+  void destroy([EmptyCallback callback]) {
     _destroy.enter(callback);
   }
 
-  ILifecycle beforeInitializing(Function handler) {
+  ILifecycle beforeInitializing(EventListener handler) {
     if (!uninitialized) _reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
 
     _initialize.addBeforeHandler(handler);
     return this;
   }
 
-  ILifecycle whenInitializing(Function handler) {
+  ILifecycle whenInitializing(EventListener handler) {
     if (initialized) _reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
-    _dispatcher.addListener(
-        LifecycleMessage.INITIALIZE, createSyncLifecycleListener(handler));
+    addEventListener(
+        LifecycleEvent.INITIALIZE, handler);
     return this;
   }
 
-  ILifecycle afterInitializing(Function handler) {
+  ILifecycle afterInitializing(EventListener handler) {
     if (initialized) _reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
-    _dispatcher.addListener(
-        LifecycleMessage.POST_INITIALIZE, createSyncLifecycleListener(handler));
+    addEventListener(
+        LifecycleEvent.POST_INITIALIZE, handler);
     return this;
   }
 
-  ILifecycle beforeSuspending(Function handler) {
+  ILifecycle beforeSuspending(EventListener handler) {
     _suspend.addBeforeHandler(handler);
     return this;
   }
 
-  ILifecycle whenSuspending(Function handler) {
-    _dispatcher.addListener(
-        LifecycleMessage.SUSPEND, createSyncLifecycleListener(handler));
+  ILifecycle whenSuspending(EventListener handler) {
+    addEventListener(
+        LifecycleEvent.SUSPEND, handler);
     return this;
   }
 
-  ILifecycle afterSuspending(Function handler) {
-    _dispatcher.addListener(
-        LifecycleMessage.POST_SUSPEND, createSyncLifecycleListener(handler));
+  ILifecycle afterSuspending(EventListener handler) {
+    addEventListener(
+        LifecycleEvent.POST_SUSPEND, handler);
     return this;
   }
 
-  ILifecycle beforeResuming(Function handler) {
+  ILifecycle beforeResuming(EventListener handler) {
     _resume.addBeforeHandler(handler);
     return this;
   }
 
-  ILifecycle whenResuming(Function handler) {
-    _dispatcher.addListener(
-        LifecycleMessage.RESUME, createSyncLifecycleListener(handler));
+  ILifecycle whenResuming(EventListener handler) {
+    addEventListener(
+        LifecycleEvent.RESUME, handler);
     return this;
   }
 
-  ILifecycle afterResuming(Function handler) {
-    _dispatcher.addListener(
-        LifecycleMessage.POST_RESUME, createSyncLifecycleListener(handler));
+  ILifecycle afterResuming(EventListener handler) {
+    addEventListener(
+        LifecycleEvent.POST_RESUME, handler);
     return this;
   }
 
-  ILifecycle beforeDestroying(Function handler) {
+  ILifecycle beforeDestroying(EventListener handler) {
     _destroy.addBeforeHandler(handler);
     return this;
   }
 
-  ILifecycle whenDestroying(Function handler) {
-    _dispatcher.addListener(
-        LifecycleMessage.DESTROY, createSyncLifecycleListener(handler));
+  ILifecycle whenDestroying(EventListener handler) {
+    addEventListener(
+        LifecycleEvent.DESTROY, handler);
     return this;
   }
 
-  ILifecycle afterDestroying(Function handler) {
-    _dispatcher.addListener(
-        LifecycleMessage.POST_DESTROY, createSyncLifecycleListener(handler));
+  ILifecycle afterDestroying(EventListener handler) {
+    addEventListener(
+        LifecycleEvent.POST_DESTROY, handler);
     return this;
   }
-
-  //TODO
-  /*void addEventListener()
-	{
-		priority = flipPriority(type, priority);
-	}*/
-
-  //TODO
-  /*void removeEventListener()
-	{
-		_dispatcher.removeEventListener(type, listener, useCapture);
-	}*/
-
-  //TODO
-  void dispatchEvent(Symbol messageName) {
-    return _dispatcher.send(messageName);
-  }
-
-  //TODO
-  bool hasEventListener(Symbol messageName) {
-    return _dispatcher.hasListener(messageName);
-  }
-
-  //TODO
-  /*bool willTrigger()
-	{
-		
-	}*/
 
   //-----------------------------------
   //
@@ -193,7 +160,7 @@ class Lifecycle implements ILifecycle {
     if (_state == state) return;
     _state = state;
 
-    dispatchEvent(LifecycleMessage.STATE_CHANGE);
+    dispatchEvent(LifecycleEvent.STATE_CHANGE);
   }
 
   void _addReversedEventTypes(List types) {
@@ -203,30 +170,30 @@ class Lifecycle implements ILifecycle {
   }
 
   void _configureTransitions() {
-    _initialize = new LifecycleTransition(LifecycleMessage.PRE_INITIALIZE, this)
+    _initialize = new LifecycleTransition(LifecycleEvent.PRE_INITIALIZE, this)
         .fromStates([LifecycleState.UNINITIALIZED])
         .toStates(LifecycleState.INITIALIZING, LifecycleState.ACTIVE)
-        .withMessages(LifecycleMessage.PRE_INITIALIZE,
-            LifecycleMessage.INITIALIZE, LifecycleMessage.POST_INITIALIZE);
+        .withEvents(LifecycleEvent.PRE_INITIALIZE,
+            LifecycleEvent.INITIALIZE, LifecycleEvent.POST_INITIALIZE);
 
-    _suspend = new LifecycleTransition(LifecycleMessage.PRE_SUSPEND, this)
+    _suspend = new LifecycleTransition(LifecycleEvent.PRE_SUSPEND, this)
         .fromStates([LifecycleState.ACTIVE])
         .toStates(LifecycleState.SUSPENDING, LifecycleState.SUSPENDED)
-        .withMessages(LifecycleMessage.PRE_SUSPEND, LifecycleMessage.SUSPEND,
-            LifecycleMessage.POST_SUSPEND)
+        .withEvents(LifecycleEvent.PRE_SUSPEND, LifecycleEvent.SUSPEND,
+            LifecycleEvent.POST_SUSPEND)
         .inReverse();
 
-    _resume = new LifecycleTransition(LifecycleMessage.PRE_RESUME, this)
+    _resume = new LifecycleTransition(LifecycleEvent.PRE_RESUME, this)
         .fromStates([LifecycleState.SUSPENDED])
         .toStates(LifecycleState.RESUMING, LifecycleState.ACTIVE)
-        .withMessages(LifecycleMessage.PRE_RESUME, LifecycleMessage.RESUME,
-            LifecycleMessage.POST_RESUME);
+        .withEvents(LifecycleEvent.PRE_RESUME, LifecycleEvent.RESUME,
+            LifecycleEvent.POST_RESUME);
 
-    _destroy = new LifecycleTransition(LifecycleMessage.PRE_DESTROY, this)
+    _destroy = new LifecycleTransition(LifecycleEvent.PRE_DESTROY, this)
         .fromStates([LifecycleState.SUSPENDED, LifecycleState.ACTIVE])
         .toStates(LifecycleState.DESTROYING, LifecycleState.DESTROYED)
-        .withMessages(LifecycleMessage.PRE_DESTROY, LifecycleMessage.DESTROY,
-            LifecycleMessage.POST_DESTROY)
+        .withEvents(LifecycleEvent.PRE_DESTROY, LifecycleEvent.DESTROY,
+            LifecycleEvent.POST_DESTROY)
         .inReverse();
   }
 
@@ -236,32 +203,16 @@ class Lifecycle implements ILifecycle {
         : priority;
   }
 
-  //TODO
-  Function createSyncLifecycleListener(Function handler, [bool once = false]) {
-    //TODO: implement handler typedef
-
-    /*return () {
-			
-			if (once)
-				
-				
-		};*/
-
-    return (event) {
-      handler();
-    };
-  }
 
   void _reportError(String message) {
-    /*LifecycleError error = new LifecycleError(message);
+    LifecycleError error = new LifecycleError(message);
 		if (hasEventListener(LifecycleEvent.ERROR))
 		{
-  		const event:LifecycleEvent = new LifecycleEvent(LifecycleEvent.ERROR, error);
-			dispatchEvent(event);
+			dispatchEvent(LifecycleEvent.ERROR,payload: message);
   	}
   	else
   	{
   		throw error;
-  	}*/
+  	}
   }
 }

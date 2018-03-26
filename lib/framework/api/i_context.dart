@@ -37,13 +37,13 @@ abstract class IContext {
 
   IContext release(List<dynamic> instances);
 
-  void initialize([Function callback = null]);
+  void initialize([ErrorCallback callback]);
 
-  void suspend([Function callback = null]);
+  void suspend([ErrorCallback callback]);
 
-  void resume([Function callback = null]);
+  void resume([ErrorCallback callback]);
 
-  void destroy([Function callback = null]);
+  void destroy([ErrorCallback callback]);
 
   IContext beforeInitializing(Function handler);
 
