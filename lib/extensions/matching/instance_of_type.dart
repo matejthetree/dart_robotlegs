@@ -1,36 +1,33 @@
 part of robotlegs;
 
-IMatcher instanceOfType(Type type)
-{
-	return new InstanceOfMatcher(type);
+IMatcher instanceOfType(Type type) {
+  return new InstanceOfMatcher(type);
 }
 
-class InstanceOfMatcher implements IMatcher
-{
+class InstanceOfMatcher implements IMatcher {
   //-----------------------------------
   //
   // Private Properties
   //
   //-----------------------------------
-	
-	Type _type;
-	
+
+  Type _type;
+
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	InstanceOfMatcher(this._type);
 
-	//-----------------------------------
-	//
-	// Public Methods
-	//
-	//-----------------------------------
-	
-	bool matches(dynamic item)
-	{
-		return item.runtimeType == _type;
-	}
+  InstanceOfMatcher(this._type);
+
+  //-----------------------------------
+  //
+  // Public Methods
+  //
+  //-----------------------------------
+
+  bool matches(dynamic item) {
+    return item.runtimeType == _type;
+  }
 }

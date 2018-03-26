@@ -1,62 +1,61 @@
 part of robotlegs;
 
 abstract class ILifecycle {
-	
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	String get state;
 
-	dynamic get target;
+  String get state;
 
-	bool get uninitialized;
+  dynamic get target;
 
-	bool get initialized;
+  bool get uninitialized;
 
-	bool get active;
+  bool get initialized;
 
-	bool get suspended;
+  bool get active;
 
-	bool get destroyed;
-	
+  bool get suspended;
+
+  bool get destroyed;
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	void initialize([Function callback = null]);
 
-	void suspend([Function callback = null]);
+  void initialize([Function callback = null]);
 
-	void resume([Function callback = null]);
+  void suspend([Function callback = null]);
 
-	void destroy([Function callback = null]);
-	
-	ILifecycle beforeInitializing(Function handler);
+  void resume([Function callback = null]);
 
-	ILifecycle whenInitializing(Function handler);
+  void destroy([Function callback = null]);
 
-	ILifecycle afterInitializing(Function handler);
+  ILifecycle beforeInitializing(Function handler);
 
-	ILifecycle beforeSuspending(Function handler);
+  ILifecycle whenInitializing(Function handler);
 
-	ILifecycle whenSuspending(Function handler);
+  ILifecycle afterInitializing(Function handler);
 
-	ILifecycle afterSuspending(Function handler);
+  ILifecycle beforeSuspending(Function handler);
 
-	ILifecycle beforeResuming(Function handler);
+  ILifecycle whenSuspending(Function handler);
 
-	ILifecycle whenResuming(Function handler);
+  ILifecycle afterSuspending(Function handler);
 
-	ILifecycle afterResuming(Function handler);
+  ILifecycle beforeResuming(Function handler);
 
-	ILifecycle beforeDestroying(Function handler);
+  ILifecycle whenResuming(Function handler);
 
-	ILifecycle whenDestroying(Function handler);
+  ILifecycle afterResuming(Function handler);
 
-	ILifecycle afterDestroying(Function handler);
+  ILifecycle beforeDestroying(Function handler);
+
+  ILifecycle whenDestroying(Function handler);
+
+  ILifecycle afterDestroying(Function handler);
 }

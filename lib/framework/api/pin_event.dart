@@ -1,5 +1,3 @@
 part of robotlegs;
 
-abstract class PinEvent {
-	
-}
+abstract class PinEvent {}

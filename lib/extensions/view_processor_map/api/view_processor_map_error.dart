@@ -1,33 +1,30 @@
 part of robotlegs;
 
-class ViewProcessorMapError extends Error
-{
-	//-----------------------------------
+class ViewProcessorMapError extends Error {
+  //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	final String message;
-	
-	//-----------------------------------
+
+  final String message;
+
+  //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	ViewProcessorMapError([this.message = ""]);
-      
-	//-----------------------------------
+
+  ViewProcessorMapError([this.message = ""]);
+
+  //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-  String toString() 
-  {
-    if (message != null) 
-      return "ViewProcessorMapError: $message";
+
+  String toString() {
+    if (message != null) return "ViewProcessorMapError: $message";
 
     return "ViewProcessorMapError";
   }

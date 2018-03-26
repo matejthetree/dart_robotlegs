@@ -1,14 +1,11 @@
 part of robotlegs;
 
-abstract class Command implements ICommand
-{
+abstract class Command implements ICommand {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-  void execute()
-  {
-  }
+
+  void execute() {}
 }

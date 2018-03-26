@@ -1,12 +1,11 @@
 part of robotlegs;
 
-abstract class IMediatorMapper
-{
+abstract class IMediatorMapper {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	IMediatorConfigurator toMediator(Type mediatorType);
+
+  IMediatorConfigurator toMediator(Type mediatorType);
 }

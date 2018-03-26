@@ -1,6 +1,5 @@
 part of robotlegs;
 
-abstract class ITypeMatcher
-{
-	ITypeFilter createTypeFilter();
+abstract class ITypeMatcher {
+  ITypeFilter createTypeFilter();
 }

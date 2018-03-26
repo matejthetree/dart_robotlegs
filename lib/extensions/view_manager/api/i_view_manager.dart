@@ -1,16 +1,15 @@
 part of robotlegs;
 
 abstract class IViewManager {
-	
-	List<dom.Element> get containers;
-	
-	void addContainer(dynamic container);
+  List<dom.Element> get containers;
 
-	void removeContainer(dynamic container);
+  void addContainer(dynamic container);
 
-	void addViewHandler(IViewHandler handler);
+  void removeContainer(dynamic container);
 
-	void removeViewHandler(IViewHandler handler);
-	
-	void removeAllHandlers();
+  void addViewHandler(IViewHandler handler);
+
+  void removeViewHandler(IViewHandler handler);
+
+  void removeAllHandlers();
 }

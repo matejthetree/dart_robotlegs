@@ -1,10 +1,9 @@
 part of robotlegs;
 
-abstract class IMediatorConfigurator
-{
-	IMediatorConfigurator withGuards(List guards);
+abstract class IMediatorConfigurator {
+  IMediatorConfigurator withGuards(List guards);
 
-	IMediatorConfigurator withHooks(List hooks);
+  IMediatorConfigurator withHooks(List hooks);
 
-	IMediatorConfigurator autoRemove([bool value = true]);
+  IMediatorConfigurator autoRemove([bool value = true]);
 }

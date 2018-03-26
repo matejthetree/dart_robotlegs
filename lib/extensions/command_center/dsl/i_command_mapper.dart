@@ -1,12 +1,11 @@
 part of robotlegs;
 
-abstract class ICommandMapper
-{
+abstract class ICommandMapper {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
+
   ICommandConfigurator toCommand(Type commandClass);
 }

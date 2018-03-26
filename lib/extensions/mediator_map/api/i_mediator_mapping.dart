@@ -1,20 +1,19 @@
 part of robotlegs;
 
-abstract class IMediatorMapping
-{
+abstract class IMediatorMapping {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	ITypeFilter get matcher;
 
-	Type get mediatorType;
+  ITypeFilter get matcher;
 
-	List get guards ;
+  Type get mediatorType;
 
-	List get hooks ;
+  List get guards;
 
-	bool get autoRemoveEnabled ;
+  List get hooks;
+
+  bool get autoRemoveEnabled;
 }

@@ -1,10 +1,9 @@
 part of robotlegs;
 
-abstract class IViewProcessorMapper
-{
-	IViewProcessorMappingConfig toProcess(dynamic processClassOrInstance);
+abstract class IViewProcessorMapper {
+  IViewProcessorMappingConfig toProcess(dynamic processClassOrInstance);
 
-	IViewProcessorMappingConfig toInjection();
+  IViewProcessorMappingConfig toInjection();
 
-	IViewProcessorMappingConfig toNoProcess();
+  IViewProcessorMappingConfig toNoProcess();
 }

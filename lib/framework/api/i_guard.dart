@@ -1,12 +1,11 @@
 part of robotlegs;
 
-abstract class IGuard 
-{
+abstract class IGuard {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	bool approve();
+
+  bool approve();
 }

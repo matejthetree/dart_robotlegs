@@ -1,16 +1,15 @@
 part of robotlegs;
 
-abstract class IViewProcessorMap
-{
-	IViewProcessorMapper mapMatcher(ITypeMatcher matcher);
+abstract class IViewProcessorMap {
+  IViewProcessorMapper mapMatcher(ITypeMatcher matcher);
 
-	IViewProcessorMapper map(Type type);
+  IViewProcessorMapper map(Type type);
 
-	IViewProcessorUnmapper unmapMatcher(ITypeMatcher matcher);
+  IViewProcessorUnmapper unmapMatcher(ITypeMatcher matcher);
 
-	IViewProcessorUnmapper unmap(Type type);
-	
-	void process(dynamic item);
+  IViewProcessorUnmapper unmap(Type type);
 
-	void unprocess(dynamic item);
+  void process(dynamic item);
+
+  void unprocess(dynamic item);
 }

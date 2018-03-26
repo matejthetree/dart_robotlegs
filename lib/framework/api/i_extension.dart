@@ -1,13 +1,11 @@
 part of robotlegs;
 
-abstract class IExtension 
-{
-	
+abstract class IExtension {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	void extend(IContext context);
+
+  void extend(IContext context);
 }

@@ -1,46 +1,44 @@
 part of robotlegs;
 
-class Mediator implements IMediator 
-{
+class Mediator implements IMediator {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	@inject
-	IMessageDispatcher messageDispatcher;
-	
-	dynamic viewComponent;
-	
+
+  @inject
+  IMessageDispatcher messageDispatcher;
+
+  dynamic viewComponent;
+
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	Mediator();
-	
+
+  Mediator();
+
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	void preInitialize() {}
 
-	void initialize() {}
+  void preInitialize() {}
 
-	void postInitialize() {}
+  void initialize() {}
 
-	void preDestroy() {}
-	
-	void destroy() {}
+  void postInitialize() {}
 
-	void postDestroy() {}
-	
-	void dispatch(Symbol name, [dynamic data = null]) 
-	{
-		messageDispatcher.send(name, data);
-	}
+  void preDestroy() {}
+
+  void destroy() {}
+
+  void postDestroy() {}
+
+  void dispatch(Symbol name, [dynamic data = null]) {
+    messageDispatcher.send(name, data);
+  }
 }

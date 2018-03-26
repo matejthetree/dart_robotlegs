@@ -1,21 +1,21 @@
 part of robotlegs;
 
-class ContextView
-{
+class ContextView {
   //-----------------------------------
   //
   // Public Properties
   //
   //-----------------------------------
-	
-	dom.Element _view;
-	dom.Element get view => _view;
-	
+
+  dom.Element _view;
+
+  dom.Element get view => _view;
+
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
-	
-	ContextView(this._view);
+
+  ContextView(this._view);
 }

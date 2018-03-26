@@ -1,14 +1,13 @@
 part of robotlegs;
 
-abstract class IMediatorUnmapper
-{
+abstract class IMediatorUnmapper {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	void fromMediator(Type mediatorType);
-	
-	void fromAll();
+
+  void fromMediator(Type mediatorType);
+
+  void fromAll();
 }

@@ -1,5 +1,1 @@
-
-
-abstract class IEventDispatcher {
-	
-}
+abstract class IEventDispatcher {}

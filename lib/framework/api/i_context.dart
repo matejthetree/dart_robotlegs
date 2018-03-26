@@ -1,72 +1,71 @@
 part of robotlegs;
 
-abstract class IContext 
-{
-	IInjector get injector;
-	
-	int get logLevel;
-	
-	void set logLevel(int value);
-	
-	String get state;
-	
-	bool get uninitialized;
-	
-	bool get initialized;
-	
-	bool get active;
-	
-	bool get suspended;
-	
-	bool get destroyed;
-	
-	IContext install(List<Type> extensions);
-	
-	IContext configure(List configs);
-	
-	IContext addChild(IContext child);
+abstract class IContext {
+  IInjector get injector;
 
-	IContext removeChild(IContext child);
+  int get logLevel;
 
-	IContext addConfigHandler(IMatcher matcher, Function handler);
+  void set logLevel(int value);
 
-	ILogger getLogger(dynamic source);
+  String get state;
 
-	IContext addLogTarget(ILogTarget target);
+  bool get uninitialized;
 
-	IContext detain(List<dynamic> instances);
+  bool get initialized;
 
-	IContext release(List<dynamic> instances);
+  bool get active;
 
-	void initialize([Function callback = null]);
+  bool get suspended;
 
-	void suspend([Function callback = null]);
+  bool get destroyed;
 
-	void resume([Function callback = null]);
+  IContext install(List<Type> extensions);
 
-	void destroy([Function callback = null]);
-	
-	IContext beforeInitializing(Function handler);
+  IContext configure(List configs);
 
-	IContext whenInitializing(Function handler);
+  IContext addChild(IContext child);
 
-	IContext afterInitializing(Function handler);
+  IContext removeChild(IContext child);
 
-	IContext beforeSuspending(Function handler);
-	
-	IContext whenSuspending(Function handler);
+  IContext addConfigHandler(IMatcher matcher, Function handler);
 
-	IContext afterSuspending(Function handler);
+  ILogger getLogger(dynamic source);
 
-	IContext beforeResuming(Function handler);
+  IContext addLogTarget(ILogTarget target);
 
-	IContext whenResuming(Function handler);
+  IContext detain(List<dynamic> instances);
 
-	IContext afterResuming(Function handler);
+  IContext release(List<dynamic> instances);
 
-	IContext beforeDestroying(Function handler);
+  void initialize([Function callback = null]);
 
-	IContext whenDestroying(Function handler);
+  void suspend([Function callback = null]);
 
-	IContext afterDestroying(Function handler);
+  void resume([Function callback = null]);
+
+  void destroy([Function callback = null]);
+
+  IContext beforeInitializing(Function handler);
+
+  IContext whenInitializing(Function handler);
+
+  IContext afterInitializing(Function handler);
+
+  IContext beforeSuspending(Function handler);
+
+  IContext whenSuspending(Function handler);
+
+  IContext afterSuspending(Function handler);
+
+  IContext beforeResuming(Function handler);
+
+  IContext whenResuming(Function handler);
+
+  IContext afterResuming(Function handler);
+
+  IContext beforeDestroying(Function handler);
+
+  IContext whenDestroying(Function handler);
+
+  IContext afterDestroying(Function handler);
 }

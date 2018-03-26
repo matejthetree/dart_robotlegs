@@ -1,24 +1,23 @@
 part of robotlegs;
 
-abstract class IMediator 
-{
+abstract class IMediator {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	dynamic viewComponent;
-	
-	void preInitialize();
 
-	void initialize();
+  dynamic viewComponent;
 
-	void postInitialize();
+  void preInitialize();
 
-	void preDestroy();
-	
-	void destroy();
+  void initialize();
 
-	void postDestroy();
+  void postInitialize();
+
+  void preDestroy();
+
+  void destroy();
+
+  void postDestroy();
 }

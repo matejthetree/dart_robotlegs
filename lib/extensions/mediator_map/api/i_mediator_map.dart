@@ -1,24 +1,23 @@
 part of robotlegs;
 
-abstract class IMediatorMap
-{
+abstract class IMediatorMap {
   //-----------------------------------
   //
   // Public Methods
   //
   //-----------------------------------
-	
-	IMediatorMapper mapMatcher(ITypeMatcher matcher);
 
-	IMediatorMapper map(Type type);
+  IMediatorMapper mapMatcher(ITypeMatcher matcher);
 
-	IMediatorUnmapper unmapMatcher(ITypeMatcher matcher);
+  IMediatorMapper map(Type type);
 
-	IMediatorUnmapper unmap(Type type);
+  IMediatorUnmapper unmapMatcher(ITypeMatcher matcher);
 
-	void mediate(dynamic item);
+  IMediatorUnmapper unmap(Type type);
 
-	void unmediate(dynamic item);
+  void mediate(dynamic item);
 
-	void unmediateAll();
+  void unmediate(dynamic item);
+
+  void unmediateAll();
 }
