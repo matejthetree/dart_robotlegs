@@ -6,7 +6,6 @@ library robotlegs;
 
 import 'dart:async';
 import 'dart:html' as dom;
-import 'dart:mirrors';
 
 import 'package:robotlegs_di/robotlegs_di.dart';
 
@@ -121,7 +120,6 @@ part 'framework/impl/object_processor.dart';
 part 'framework/impl/pin.dart';
 part 'framework/impl/rl_message_dispatcher.dart';
 part 'framework/impl/robotlegs_injector.dart';
-part 'framework/impl/safely_callback.dart';
 
 //-----------------------------------
 // Bundles
