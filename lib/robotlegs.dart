@@ -106,6 +106,7 @@ part 'framework/api/lifecycle_message.dart';
 part 'framework/api/lifecycle_state.dart';
 part 'framework/api/log_level.dart';
 part 'framework/api/pin_event.dart';
+part 'framework/api/i_message_dispatcher.dart';
 part 'framework/impl/apply_hooks.dart';
 part 'framework/impl/config_manager.dart';
 part 'framework/impl/context.dart';

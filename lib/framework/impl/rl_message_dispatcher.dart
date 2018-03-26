@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class RLMessageDispatcher {
+class RLMessageDispatcher implements IMessageDispatcher{
   //-----------------------------------
   //
   // Public Properties
@@ -48,6 +48,7 @@ class RLMessageDispatcher {
     }
   }
 }
+
 
 class RLMessageRunner {
   //-----------------------------------
