@@ -31,14 +31,14 @@ class Pin {
   void detain(dynamic instance) {
     if (_instances[instance] == null) {
       _instances[instance] = true;
-      _dispatcher.dispatchMessage(PinMessage.detain);
+      _dispatcher.dispatchEvent(PinMessage.detain);
     }
   }
 
   void release(dynamic instance) {
     if (_instances[instance] != null) {
       _instances.remove(instance);
-      _dispatcher.dispatchMessage(PinMessage.release);
+      _dispatcher.dispatchEvent(PinMessage.release);
     }
   }
 
