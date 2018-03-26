@@ -1,5 +1,8 @@
 part of robotlegs;
 
+enum PinMessage{
+  detain,release
+}
 class Pin {
   //-----------------------------------
   //
@@ -9,7 +12,6 @@ class Pin {
 
   final Map<dynamic, bool> _instances = new Map<dynamic, bool>();
 
-  // TODO: replace with eventdesipatcher equivalent
   IMessageDispatcher _dispatcher;
 
   //-----------------------------------
@@ -29,14 +31,14 @@ class Pin {
   void detain(dynamic instance) {
     if (_instances[instance] == null) {
       _instances[instance] = true;
-      //_dispatcher.dispatchEvent()
+      _dispatcher.dispatchMessage(PinMessage.detain);
     }
   }
 
   void release(dynamic instance) {
     if (_instances[instance] != null) {
       _instances.remove(instance);
-      //_dispatcher.dispatchEvent()
+      _dispatcher.dispatchMessage(PinMessage.release);
     }
   }
 
