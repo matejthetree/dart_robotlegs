@@ -75,7 +75,7 @@ class LifecycleTransition {
   }
 
   LifecycleTransition addBeforeHandler(EventListener handler) {
-    _lifecycle.addEventListener(_eventName, handler);
+    _lifecycle.dispatcher.addEventListener(_eventName, handler);
     return this;
   }
 
@@ -99,7 +99,7 @@ class LifecycleTransition {
 
     _setState(_transitionState);
 
-    _lifecycle.dispatchEvent(_eventName, reverse: _reverse);
+    _lifecycle.dispatcher.dispatchEvent(_eventName, reverse: _reverse);
     enterCallback();
 
   }
@@ -139,14 +139,14 @@ class LifecycleTransition {
   }
 
   void _dispatch(dynamic event) {
-    if (event != '' && _lifecycle.hasEventListener(event))
-      _lifecycle.dispatchEvent(event);
+    if (event != '' && _lifecycle.dispatcher.hasEventListener(event))
+      _lifecycle.dispatcher.dispatchEvent(event);
   }
 
   void _reportError(String message, [ErrorCallback callbacks]) {
-    if (_lifecycle.hasEventListener(LifecycleEvent.ERROR))
+    if (_lifecycle.dispatcher.hasEventListener(LifecycleEvent.ERROR))
     {
-      _lifecycle.dispatchEvent(LifecycleEvent.ERROR,payload: message);
+      _lifecycle.dispatcher.dispatchEvent(LifecycleEvent.ERROR,payload: message);
     }
     else
     {

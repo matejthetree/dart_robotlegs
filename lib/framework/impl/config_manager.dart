@@ -31,8 +31,8 @@ class ConfigManager {
     addConfigHandler(new ClassMatcher(), _handleType);
     addConfigHandler(new ObjectMatcher(), _handleObject);
 
-    (context as MessageDispatcher)
-        .addListener(LifecycleEvent.INITIALIZE, _initialize, -100);
+    (context as IMessageDispatcher)
+        .addEventListener(LifecycleEvent.INITIALIZE, _initialize);
   }
 
   //-----------------------------------
@@ -58,11 +58,13 @@ class ConfigManager {
   //
   //-----------------------------------
 
-  void _initialize(Message message) {
+  EventListener _initialize(dynamic event, [dynamic payload]) {
     if (!_initialized) {
       _initialized = true;
       _processQueue();
     }
+
+    return null;
   }
 
   void _handleType(Type type) {

@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class Context extends MessageDispatcher implements IContext {
+class Context extends RLEventDispatcher implements IContext {
   //-----------------------------------
   //
   // Public Properties

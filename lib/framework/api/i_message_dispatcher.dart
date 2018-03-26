@@ -1,6 +1,6 @@
 part of robotlegs;
 
-typedef EventListener(dynamic event, [dynamic payload]) ;
+typedef void EventListener(dynamic event, [dynamic payload]) ;
 
 abstract class IMessageDispatcher {
   void dispatchEvent(dynamic message,

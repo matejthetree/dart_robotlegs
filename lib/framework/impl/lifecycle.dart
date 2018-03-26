@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class Lifecycle extends RLEventDispatcher implements ILifecycle {
+class Lifecycle implements ILifecycle {
   //-----------------------------------
   //
   // Public Properties
@@ -44,15 +44,19 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
   LifecycleTransition _resume;
 
   LifecycleTransition _destroy;
+  
+  final IMessageDispatcher _dispatcher;
 
+  IMessageDispatcher get dispatcher =>_dispatcher;
   //-----------------------------------
   //
   // Constructor
   //
   //-----------------------------------
 
-  Lifecycle() {
+  Lifecycle(this._dispatcher) {
 
+    _dispatcher?? new RLEventDispatcher();
     _configureTransitions();
   }
 
@@ -87,14 +91,14 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
 
   ILifecycle whenInitializing(EventListener handler) {
     if (initialized) _reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.INITIALIZE, handler);
     return this;
   }
 
   ILifecycle afterInitializing(EventListener handler) {
     if (initialized) _reportError(LifecycleError.LATE_HANDLER_ERROR_MESSAGE);
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.POST_INITIALIZE, handler);
     return this;
   }
@@ -105,13 +109,13 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
   }
 
   ILifecycle whenSuspending(EventListener handler) {
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.SUSPEND, handler);
     return this;
   }
 
   ILifecycle afterSuspending(EventListener handler) {
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.POST_SUSPEND, handler);
     return this;
   }
@@ -122,13 +126,13 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
   }
 
   ILifecycle whenResuming(EventListener handler) {
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.RESUME, handler);
     return this;
   }
 
   ILifecycle afterResuming(EventListener handler) {
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.POST_RESUME, handler);
     return this;
   }
@@ -139,13 +143,13 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
   }
 
   ILifecycle whenDestroying(EventListener handler) {
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.DESTROY, handler);
     return this;
   }
 
   ILifecycle afterDestroying(EventListener handler) {
-    addEventListener(
+    _dispatcher.addEventListener(
         LifecycleEvent.POST_DESTROY, handler);
     return this;
   }
@@ -160,7 +164,7 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
     if (_state == state) return;
     _state = state;
 
-    dispatchEvent(LifecycleEvent.STATE_CHANGE);
+    _dispatcher.dispatchEvent(LifecycleEvent.STATE_CHANGE);
   }
 
   void _addReversedEventTypes(List types) {
@@ -206,9 +210,9 @@ class Lifecycle extends RLEventDispatcher implements ILifecycle {
 
   void _reportError(String message) {
     LifecycleError error = new LifecycleError(message);
-		if (hasEventListener(LifecycleEvent.ERROR))
+		if (_dispatcher.hasEventListener(LifecycleEvent.ERROR))
 		{
-			dispatchEvent(LifecycleEvent.ERROR,payload: message);
+      _dispatcher.dispatchEvent(LifecycleEvent.ERROR,payload: message);
   	}
   	else
   	{
