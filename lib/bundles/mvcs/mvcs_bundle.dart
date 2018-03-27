@@ -16,8 +16,7 @@ class MVCSBundle implements IBundle {
       ViewManagerExtension,
       ViewProcessorMapExtension,
       StageCrawlerExtension,
-      StageSyncExtension,
-      MessageDispatcherExtension,
+      EventDispatcherExtension,
       MessageCommandMapExtension,
       MediatorMapExtension
     ]);

@@ -1,24 +1,11 @@
 part of robotlegs;
 
-class ContainerRegistry extends Object with MessagingMixin {
+class ContainerRegistry extends RLEventDispatcher {
   //-----------------------------------
   //
   // Public Static Properties
   //
   //-----------------------------------
-
-  //-----------------------------------
-  // Messages
-  //-----------------------------------
-
-  static const Symbol CONTAINER_ADD =
-      const Symbol('ContainerRegistry.CONTAINER_ADD');
-  static const Symbol CONTAINER_REMOVE =
-      const Symbol('ContainerRegistry.CONTAINER_REMOVE');
-  static const Symbol ROOT_CONTAINER_ADD =
-      const Symbol('ContainerRegistry.ROOT_CONTAINER_ADD');
-  static const Symbol ROOT_CONTAINER_REMOVE =
-      const Symbol('ContainerRegistry.ROOT_CONTAINER_REMOVE');
 
   //-----------------------------------
   //
@@ -88,7 +75,7 @@ class ContainerRegistry extends Object with MessagingMixin {
     final ContainerBinding binding = new ContainerBinding(container);
     _bindings.add(binding);
 
-    binding.addMessageListener(ContainerBinding.BINDING_EMPTY, _onBindingEmpty);
+    binding.addEventListener(ViewManagerEvent.BINDING_EMPTY, _onBindingEmpty);
 
     binding.parent = findParentBinding(container);
     if (binding.parent == null) {
@@ -106,7 +93,7 @@ class ContainerRegistry extends Object with MessagingMixin {
       }
     });
 
-    sendMessage(ContainerRegistry.CONTAINER_ADD, binding.container);
+    dispatchEvent(ViewManagerEvent.CONTAINER_ADD, data:binding.container);
     return binding;
   }
 
@@ -114,8 +101,8 @@ class ContainerRegistry extends Object with MessagingMixin {
     _bindingsByContainer.remove(binding.container);
     _bindings.remove(binding);
 
-    binding.removeMessageListener(
-        ContainerBinding.BINDING_EMPTY, _onBindingEmpty);
+    binding.removeEventListener(
+        ViewManagerEvent.BINDING_EMPTY, _onBindingEmpty);
 
     if (binding.parent == null) {
       _removeRootBinding(binding);
@@ -130,20 +117,20 @@ class ContainerRegistry extends Object with MessagingMixin {
       }
     });
 
-    sendMessage(ContainerRegistry.CONTAINER_REMOVE, binding.container);
+    dispatchEvent(ViewManagerEvent.CONTAINER_REMOVE, data:binding.container);
   }
 
   void _addRootBinding(dynamic binding) {
     _rootBindings.add(binding);
-    sendMessage(ContainerRegistry.ROOT_CONTAINER_ADD, binding.container);
+    dispatchEvent(ViewManagerEvent.ROOT_CONTAINER_ADD, data:binding.container);
   }
 
   void _removeRootBinding(dynamic binding) {
     _rootBindings.remove(binding);
-    sendMessage(ContainerRegistry.ROOT_CONTAINER_REMOVE, binding.container);
+    dispatchEvent(ViewManagerEvent.ROOT_CONTAINER_REMOVE, data:binding.container);
   }
 
-  void _onBindingEmpty(dynamic binding) {
-    _removeBinding(binding as ContainerBinding);
+  void _onBindingEmpty(Event event) {
+    _removeBinding(event.data as ContainerBinding);
   }
 }

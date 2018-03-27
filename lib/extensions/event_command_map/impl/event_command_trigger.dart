@@ -1,13 +1,13 @@
 part of robotlegs;
 
-class MessageCommandTrigger implements ICommandTrigger {
+class EventCommandTrigger implements ICommandTrigger {
   //-----------------------------------
   //
   // Private Properties
   //
   //-----------------------------------
 
-  IMessageDispatcher _dispatcher;
+  IEventDispatcher _dispatcher;
 
   Symbol _name;
 
@@ -21,8 +21,8 @@ class MessageCommandTrigger implements ICommandTrigger {
   //
   //-----------------------------------
 
-  MessageCommandTrigger(
-      IInjector injector, IMessageDispatcher dispatcher, Symbol name,
+  EventCommandTrigger(
+      IInjector injector, IEventDispatcher dispatcher, Symbol name,
       [List processors = null, ILogger logger = null]) {
     _dispatcher = dispatcher;
     _name = name;
@@ -41,11 +41,11 @@ class MessageCommandTrigger implements ICommandTrigger {
   }
 
   void activate() {
-    _dispatcher.addListener(_name, messageHandler);
+    _dispatcher.addEventListener(_name, eventHandler);
   }
 
   void deactivate() {
-    _dispatcher.removeListener(_name, messageHandler);
+    _dispatcher.removeEventListener(_name, eventHandler);
   }
 
   //-----------------------------------
@@ -54,10 +54,10 @@ class MessageCommandTrigger implements ICommandTrigger {
   //
   //-----------------------------------
 
-  void messageHandler(Message message) {
-    final Type payloadMessageType = message.runtimeType;
+  void eventHandler(Event event) {
+    final Type eventDataType = event.data.runtimeType;
 
     _executor.executeCommands(_mappings.getList(),
-        new CommandPayload([message], [payloadMessageType]));
+        new CommandPayload([event.data], [eventDataType]));
   }
 }

@@ -54,8 +54,9 @@ class CommandExecutor implements ICommandExecutor {
       if (injectionEnabled) _unmapPayload(payload);
 
       if (command != null && mapping.executeMethod != null) {
-        InstanceMirror mirror = reflect(command);
-        dynamic result = mirror.invoke(mapping.executeMethod, []);
+        dynamic result;
+        (command == ICommand) ? (command as ICommand).execute() :
+        result = reflect.reflect(command).invoke(mapping.executeMethod, []);
 
         //final dynamic result = command.invoke(mapping.executeMethod);
 

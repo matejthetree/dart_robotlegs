@@ -8,7 +8,7 @@ bool guardsApprove(List<dynamic> guards, [IInjector injector = null]) {
     if (guard is Type) {
       guard = (injector == null)
           ? injector.instantiateUnmapped(guard as Type)
-          : reflectClass(guard as Type).newInstance(new Symbol(''), []);
+          : throw new Error();
     }
     if (guard.approve() == false) return false;
   });

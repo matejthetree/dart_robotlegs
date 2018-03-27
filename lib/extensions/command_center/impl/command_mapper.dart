@@ -55,7 +55,7 @@ class CommandMapper
     return this;
   }
 
-  ICommandConfigurator withExecuteMethod(Symbol name) {
+  ICommandConfigurator withExecuteMethod(String name) {
     _mapping.setExecuteMethod(name);
     return this;
   }

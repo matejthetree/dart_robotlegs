@@ -45,9 +45,9 @@ class Lifecycle implements ILifecycle {
 
   LifecycleTransition _destroy;
   
-  final IMessageDispatcher _dispatcher;
+  final IEventDispatcher _dispatcher;
 
-  IMessageDispatcher get dispatcher =>_dispatcher;
+  IEventDispatcher get dispatcher =>_dispatcher;
   //-----------------------------------
   //
   // Constructor
@@ -212,7 +212,7 @@ class Lifecycle implements ILifecycle {
     LifecycleError error = new LifecycleError(message);
 		if (_dispatcher.hasEventListener(LifecycleEvent.ERROR))
 		{
-      _dispatcher.dispatchEvent(LifecycleEvent.ERROR,payload: message);
+      _dispatcher.dispatchEvent(LifecycleEvent.ERROR,message: message);
   	}
   	else
   	{

@@ -7,9 +7,8 @@ class ContextView {
   //
   //-----------------------------------
 
-  dom.Element _view;
+  final dynamic view;
 
-  dom.Element get view => _view;
 
   //-----------------------------------
   //
@@ -17,5 +16,5 @@ class ContextView {
   //
   //-----------------------------------
 
-  ContextView(this._view);
+  const ContextView(this.view);
 }

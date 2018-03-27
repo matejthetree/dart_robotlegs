@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class MessageDispatcherExtension implements IExtension {
+class EventDispatcherExtension implements IExtension {
   //-----------------------------------
   //
   // Private Properties
@@ -9,7 +9,7 @@ class MessageDispatcherExtension implements IExtension {
 
   IContext _context;
 
-  IMessageDispatcher _messageDispatcher = new MessageDispatcher();
+  IEventDispatcher _messageDispatcher = new RLEventDispatcher();
 
   //LifecycleMessageRelay _lifecycleRelay;
 
@@ -21,7 +21,7 @@ class MessageDispatcherExtension implements IExtension {
 
   void extend(IContext context) {
     _context = context;
-    _context.injector.map(IMessageDispatcher).toValue(_messageDispatcher);
+    _context.injector.map(IEventDispatcher).toValue(_messageDispatcher);
     /*_context.beforeInitializing(configureLifecycleEventRelay);
 		_context.afterDestroying(destroyLifecycleEventRelay);*/
   }

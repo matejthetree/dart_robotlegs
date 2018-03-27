@@ -15,6 +15,8 @@ class ExtensionInstaller {
 
   ILogger _logger;
 
+  IInjector _injector;
+
   //-----------------------------------
   //
   // Constructor
@@ -23,6 +25,7 @@ class ExtensionInstaller {
 
   ExtensionInstaller(this._context) {
     _logger = _context.getLogger(this);
+    _injector = _context.injector;
   }
 
   //-----------------------------------
@@ -34,8 +37,7 @@ class ExtensionInstaller {
   void install(dynamic extension) {
     if (extension is Type) {
       if (_classes[extension] == null)
-        install(
-            reflectClass(extension).newInstance(new Symbol(''), []).reflectee);
+        install(_injector.instantiateUnmapped(extension));
     } else {
       final Type extensionsClass = extension.runtimeType;
       if (_classes[extensionsClass] != null) return;

@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class RLEventDispatcher implements IMessageDispatcher{
+class RLEventDispatcher implements IEventDispatcher{
   //-----------------------------------
   //
   // Public Properties
@@ -38,10 +38,10 @@ class RLEventDispatcher implements IMessageDispatcher{
     }
   }
 
-  void dispatchEvent(dynamic event,{bool reverse = false, dynamic payload}) {
+  void dispatchEvent(dynamic event,{bool reverse = false, dynamic data,dynamic target, String message}) {
     List<EventListener> handlers = _handlers[event];
     if (handlers != null) {
-      new RLEventRunner(event, handlers, payload).run();
+      new RLEventRunner(new Event(event,data: data,target: target,message: message), handlers).run();
     }
   }
 }
@@ -54,11 +54,10 @@ class RLEventRunner {
   //
   //-----------------------------------
 
-  dynamic _event;
+  final Event _event;
 
-  List<EventListener> _handlers;
+  final List<EventListener> _handlers;
 
-  dynamic _payload;
 
   //-----------------------------------
   //
@@ -66,7 +65,7 @@ class RLEventRunner {
   //
   //-----------------------------------
 
-  RLEventRunner(this._event, this._handlers, this._payload);
+  const RLEventRunner(this._event, this._handlers);
 
   //-----------------------------------
   //
@@ -88,7 +87,7 @@ class RLEventRunner {
     EventListener handler = _handlers.removeLast();
 
     while (handler != null) {
-      handler(_event,_payload);
+      handler(_event);
 
       if (_handlers.length > 0)
         handler = _handlers.removeLast();

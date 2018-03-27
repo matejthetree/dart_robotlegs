@@ -9,7 +9,7 @@ abstract class ICommandMapping {
 
   Type get commandType;
 
-  Symbol get executeMethod;
+  String get executeMethod;
 
   List<IGuard> get guards;
 
@@ -25,7 +25,7 @@ abstract class ICommandMapping {
   //
   //-----------------------------------
 
-  ICommandMapping setExecuteMethod(Symbol name);
+  ICommandMapping setExecuteMethod(String name);
 
   ICommandMapping addGuards(List<IGuard> guards);
 

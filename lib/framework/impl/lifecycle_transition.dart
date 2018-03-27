@@ -146,7 +146,7 @@ class LifecycleTransition {
   void _reportError(String message, [ErrorCallback callbacks]) {
     if (_lifecycle.dispatcher.hasEventListener(LifecycleEvent.ERROR))
     {
-      _lifecycle.dispatcher.dispatchEvent(LifecycleEvent.ERROR,payload: message);
+      _lifecycle.dispatcher.dispatchEvent(LifecycleEvent.ERROR,message: message);
     }
     else
     {

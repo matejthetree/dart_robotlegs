@@ -1,4 +1,13 @@
 part of robotlegs;
+enum ViewManagerEvent{
+  CONTAINER_ADD,
+  CONTAINER_REMOVE,
+  HANDLER_ADD,
+  HANDLER_REMOVE,
+  ROOT_CONTAINER_ADD,
+  ROOT_CONTAINER_REMOVE,
+  BINDING_EMPTY
+}
 
 abstract class IViewManager {
   List<dom.Element> get containers;

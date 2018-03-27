@@ -11,9 +11,9 @@ class CommandMapping implements ICommandMapping {
 
   Type get commandType => _commandType;
 
-  Symbol _executeMethod = new Symbol("execute");
+  String _executeMethod = "execute";
 
-  Symbol get executeMethod => _executeMethod;
+  String get executeMethod => _executeMethod;
 
   List _guards = [];
 
@@ -45,7 +45,7 @@ class CommandMapping implements ICommandMapping {
   //
   //-----------------------------------
 
-  ICommandMapping setExecuteMethod(Symbol name) {
+  ICommandMapping setExecuteMethod(String name) {
     _executeMethod = name;
     return this;
   }

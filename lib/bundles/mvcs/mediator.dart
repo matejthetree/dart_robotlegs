@@ -8,7 +8,7 @@ class Mediator implements IMediator {
   //-----------------------------------
 
   @inject
-  IMessageDispatcher messageDispatcher;
+  IEventDispatcher eventDispatcher;
 
   dynamic viewComponent;
 
@@ -38,7 +38,7 @@ class Mediator implements IMediator {
 
   void postDestroy() {}
 
-  void dispatch(Symbol name, [dynamic data = null]) {
-    messageDispatcher.send(name, data);
+  void dispatch(String event, [dynamic data = null]) {
+    eventDispatcher.dispatchEvent(event, data: data);
   }
 }

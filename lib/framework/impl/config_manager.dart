@@ -31,7 +31,7 @@ class ConfigManager {
     addConfigHandler(new ClassMatcher(), _handleType);
     addConfigHandler(new ObjectMatcher(), _handleObject);
 
-    (context as IMessageDispatcher)
+    (context as IEventDispatcher)
         .addEventListener(LifecycleEvent.INITIALIZE, _initialize);
   }
 

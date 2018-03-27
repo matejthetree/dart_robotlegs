@@ -12,7 +12,7 @@ class Pin {
 
   final Map<dynamic, bool> _instances = new Map<dynamic, bool>();
 
-  IMessageDispatcher _dispatcher;
+  IEventDispatcher _dispatcher;
 
   //-----------------------------------
   //

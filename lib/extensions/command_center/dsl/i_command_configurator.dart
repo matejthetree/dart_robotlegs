@@ -7,7 +7,7 @@ abstract class ICommandConfigurator {
   //
   //-----------------------------------
 
-  ICommandConfigurator withExecuteMethod(Symbol method);
+  ICommandConfigurator withExecuteMethod(String method);
 
   ICommandConfigurator withGuards(List<IGuard> guards);
 

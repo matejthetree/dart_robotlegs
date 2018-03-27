@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class MessageCommandMap implements IMessageCommandMap {
+class EventCommandMap implements IEventCommandMap {
   //-----------------------------------
   //
   // Private Properties
@@ -11,7 +11,7 @@ class MessageCommandMap implements IMessageCommandMap {
 
   IInjector _injector;
 
-  IMessageDispatcher _dispatcher;
+  IEventDispatcher _dispatcher;
 
   CommandTriggerMap _triggerMap;
 
@@ -23,11 +23,11 @@ class MessageCommandMap implements IMessageCommandMap {
   //
   //-----------------------------------
 
-  MessageCommandMap(IContext context, IMessageDispatcher dispatcher) {
+  EventCommandMap(IContext context, IEventDispatcher dispatcher) {
     _injector = context.injector;
     _logger = context.getLogger(this);
     _dispatcher = dispatcher;
-    _triggerMap = new CommandTriggerMap(_getKey, _createTrigger);
+    _triggerMap = new CommandTriggerMap(_injector.getName, _createTrigger);
   }
 
   //-----------------------------------
@@ -36,15 +36,15 @@ class MessageCommandMap implements IMessageCommandMap {
   //
   //-----------------------------------
 
-  ICommandMapper map(Symbol name) {
-    return _getTrigger(name).createMapper();
+  ICommandMapper map(Type type) {
+    return _getTrigger(type).createMapper();
   }
 
-  ICommandUnmapper unmap(Symbol name) {
-    return _getTrigger(name).createMapper();
+  ICommandUnmapper unmap(Type type) {
+    return _getTrigger(type).createMapper();
   }
 
-  IMessageCommandMap addMappingProcessor(Function handler) {
+  IEventCommandMap addMappingProcessor(Function handler) {
     if (!_mappingProcessors.contains(handler)) _mappingProcessors.add(handler);
 
     return this;
@@ -56,16 +56,12 @@ class MessageCommandMap implements IMessageCommandMap {
   //
   //-----------------------------------
 
-  String _getKey(Symbol name) {
-    return MirrorSystem.getName(name);
+  EventCommandTrigger _getTrigger(Type name) {
+    return _triggerMap.getTrigger([name]) as EventCommandTrigger;
   }
 
-  MessageCommandTrigger _getTrigger(Symbol name) {
-    return _triggerMap.getTrigger([name]) as MessageCommandTrigger;
-  }
-
-  MessageCommandTrigger _createTrigger(Symbol name) {
-    return new MessageCommandTrigger(
+  EventCommandTrigger _createTrigger(Symbol name) {
+    return new EventCommandTrigger(
         _injector, _dispatcher, name, _mappingProcessors, _logger);
   }
 }

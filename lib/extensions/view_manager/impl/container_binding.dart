@@ -1,6 +1,6 @@
 part of robotlegs;
 
-class ContainerBinding extends Object with MessagingMixin {
+class ContainerBinding extends RLEventDispatcher {
   //-----------------------------------
   //
   // Public Static Properties
@@ -11,8 +11,6 @@ class ContainerBinding extends Object with MessagingMixin {
   // Messages
   //-----------------------------------
 
-  static const Symbol BINDING_EMPTY =
-      const Symbol('ContainerBinding.BINDING_EMPTY');
 
   //-----------------------------------
   //
@@ -36,7 +34,7 @@ class ContainerBinding extends Object with MessagingMixin {
   //
   //-----------------------------------
 
-  final List<IViewHandler> _handlers = new List<IViewHandler>();
+  final List<IViewHandler> _viewHandlers = new List<IViewHandler>();
 
   //-----------------------------------
   //
@@ -53,24 +51,24 @@ class ContainerBinding extends Object with MessagingMixin {
   //-----------------------------------
 
   void addHandler(IViewHandler handler) {
-    if (_handlers.contains(handler)) return;
+    if (_viewHandlers.contains(handler)) return;
 
-    _handlers.add(handler);
+    _viewHandlers.add(handler);
   }
 
   void removeHandler(IViewHandler handler) {
-    if (_handlers.contains(handler)) {
-      _handlers.remove(handler);
+    if (_viewHandlers.contains(handler)) {
+      _viewHandlers.remove(handler);
 
-      if (_handlers.length == 0) sendMessage(ContainerBinding.BINDING_EMPTY);
+      if (_viewHandlers.length == 0) dispatchEvent(ViewManagerEvent.BINDING_EMPTY);
     }
   }
 
   void handleView(dom.Element view, Type type) {
-    final int length = _handlers.length;
+    final int length = _viewHandlers.length;
 
     for (int i = 0; i < length; i++) {
-      IViewHandler handler = _handlers[i];
+      IViewHandler handler = _viewHandlers[i];
       handler.handleView(view, type);
     }
   }

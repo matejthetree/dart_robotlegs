@@ -8,7 +8,7 @@ void applyHooks(List<dynamic> hooks, [IInjector injector = null]) {
     if (hook is Type) {
       hook = (injector == null)
           ? injector.instantiateUnmapped(hook as Type)
-          : reflectClass(hook as Type).newInstance(new Symbol(''), []);
+          : throw new Error(); // todo handle this in guards and hooks, try to avoid direct reflection in robotlegs
     }
     hook.hook();
   });
