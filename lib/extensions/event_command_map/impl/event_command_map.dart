@@ -27,7 +27,7 @@ class EventCommandMap implements IEventCommandMap {
     _injector = context.injector;
     _logger = context.getLogger(this);
     _dispatcher = dispatcher;
-    _triggerMap = new CommandTriggerMap(_injector.getName, _createTrigger);
+    _triggerMap = new CommandTriggerMap(_injector.getQualifiedName, _createTrigger);
   }
 
   //-----------------------------------
