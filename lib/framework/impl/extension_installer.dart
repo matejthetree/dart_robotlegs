@@ -9,8 +9,6 @@ class ExtensionInstaller {
 
   Map<Type, bool> _classes = new Map<Type, bool>();
 
-  Reflector _reflector = new Reflector();
-
   IContext _context;
 
   ILogger _logger;
