@@ -5,3 +5,8 @@ description: Robotlegs for Google Dart
 dependencies:
   robotlegs_di:
     path: ../dart_robotlegs_di
+
+dev_dependencies:
+  benchmark_harness: any
+  test: any
+  mockito:
