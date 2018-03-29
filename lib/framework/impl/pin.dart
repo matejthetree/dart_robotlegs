@@ -1,8 +1,7 @@
 part of robotlegs;
 
-enum PinMessage{
-  detain,release
-}
+enum PinEvent { detain, release }
+
 class Pin {
   //-----------------------------------
   //
@@ -31,14 +30,14 @@ class Pin {
   void detain(dynamic instance) {
     if (_instances[instance] == null) {
       _instances[instance] = true;
-      _dispatcher.dispatchEvent(PinMessage.detain);
+      _dispatcher.dispatchEvent(PinEvent.detain);
     }
   }
 
   void release(dynamic instance) {
     if (_instances[instance] != null) {
       _instances.remove(instance);
-      _dispatcher.dispatchEvent(PinMessage.release);
+      _dispatcher.dispatchEvent(PinEvent.release);
     }
   }
 
