@@ -48,23 +48,23 @@
 //  //-----------------------------------
 //
 //  void _onRootContainerAdd(Message message) {
-//    _addRootListener(message.data as dom.Element);
+//    _addRootListener(message.data as dynamic);
 //  }
 //
 //  void _onRootContainerRemove(Message message) {
-//    _removeRootListener(message.data as dom.Element);
+//    _removeRootListener(message.data as dynamic);
 //  }
 //
-//  void _addRootListener(dom.Element container) {
+//  void _addRootListener(dynamic container) {
 //    //_watchDomForElementsAdded().then(_onViewAddedToDom);
 //    _watchElementForAddingToDom(container).then(_onContainerRootAddedToStage);
 //  }
 //
-//  void _removeRootListener(dom.Element container) {
+//  void _removeRootListener(dynamic container) {
 //    //TODO
 //  }
 //
-//  void _onViewAddedToDom(dom.Element view) {
+//  void _onViewAddedToDom(dynamic view) {
 //    // TODO: CLEANUP!
 //    final Type type = view.runtimeType;
 //    final ClassMirror mirror = reflectClass(type);
@@ -79,14 +79,14 @@
 //    }
 //  }
 //
-//  void _onContainerRootAddedToStage(dom.Element container) {
+//  void _onContainerRootAddedToStage(dynamic container) {
 //    // TODO: CLEANUP!
 //    final Type type = container.runtimeType;
 //    ContainerBinding binding = _registry.getBinding(container);
 //    binding.handleView(container, type);
 //  }
 //
-//  Future _watchElementForAddingToDom(dom.Element element) {
+//  Future _watchElementForAddingToDom(dynamic element) {
 //    var completer = new Completer();
 //
 //    new dom.MutationObserver(

@@ -46,7 +46,7 @@ class StageCrawlerExtension {
     final IViewManager viewManager = _injector.getInstance(IViewManager);
 
     viewManager.containers.forEach((container) {
-      if (container.parent != null && container.parent is dom.Element)
+      if (container.parent != null) // see if we can use widget todo
         _scanContainer(container);
     });
   }
@@ -55,8 +55,7 @@ class StageCrawlerExtension {
     _logger.debug("ViewManager is not installed. Checking the ContextView...");
     ContextView contextView = _injector.getInstance(ContextView);
 
-    if (contextView.view.parent != null &&
-        contextView.view.parent is dom.Element)
+    if (contextView.view.parent != null) // see if we can use widget todo
       _scanContainer(contextView.view);
   }
 

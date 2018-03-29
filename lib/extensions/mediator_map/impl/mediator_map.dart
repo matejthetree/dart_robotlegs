@@ -59,7 +59,7 @@ class MediatorMap implements IMediatorMap, IViewHandler {
     return unmapMatcher(new TypeMatcher().allOf([type]));
   }
 
-  void handleView(dom.Element view, Type type) {
+  void handleView(dynamic view, Type type) {
     _viewHandler.handleView(view, type);
   }
 

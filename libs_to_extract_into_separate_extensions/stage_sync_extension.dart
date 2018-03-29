@@ -65,7 +65,7 @@
 //    _context.destroy();
 //  }
 //
-//  Future _watchForAddingToDom(dom.Element element) {
+//  Future _watchForAddingToDom(dynamic element) {
 //    Completer completer = new Completer();
 //
 //    new dom.MutationObserver(
@@ -84,7 +84,7 @@
 //    return completer.future;
 //  }
 //
-///*Future _watchForRemovalFromDom(dom.Element element)
+///*Future _watchForRemovalFromDom(dynamic element)
 //  {
 //    var completer = new Completer();
 //

@@ -121,7 +121,7 @@ class ViewProcessorFactory implements IViewProcessorFactory {
   void _createRemovedListener(
       dynamic view, Type type, List<IViewProcessorMapping> processorMappings) {
     // TODO: implement
-    /*if (view is dom.Element)
+    /*if (view is dynamic)
 		{
 			final Function handler = (_) {
 		    runUnprocessors(view, type, processorMappings);

@@ -29,7 +29,7 @@ class MediatorFactory {
   //
   //-----------------------------------
 
-  dynamic getMediator(dom.Element item, IMediatorMapping mapping) {
+  dynamic getMediator(dynamic item, IMediatorMapping mapping) {
     return _mediators[item] != null ? _mediators[item][mapping] : null;
   }
 

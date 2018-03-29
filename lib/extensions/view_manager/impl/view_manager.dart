@@ -53,7 +53,7 @@ class ViewManager extends RLEventDispatcher implements IViewManager {
     dispatchEvent(ViewManagerEvent.CONTAINER_ADD, data: container);
   }
 
-  void removeContainer(dom.Element container) {
+  void removeContainer(dynamic container) {
     if (!_containers.contains(container)) return;
 
     _containers.remove(container);
@@ -63,7 +63,7 @@ class ViewManager extends RLEventDispatcher implements IViewManager {
       binding.removeHandler(handler);
     });
 
-    dispatchEvent(ViewManagerEvent.CONTAINER_REMOVE,data: container);
+    dispatchEvent(ViewManagerEvent.CONTAINER_REMOVE, data: container);
   }
 
   void addViewHandler(IViewHandler handler) {

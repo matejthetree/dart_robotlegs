@@ -33,13 +33,14 @@ class StageCrawler {
   //
   //-----------------------------------
 
-  void _scanContainer(dom.Element container) {
+  void _scanContainer(dynamic container) {
     _processView(container);
     final int numChildren = container.children.length;
 
     for (int i = 0; i < numChildren; i++) {
       final dynamic child = container.children[i];
-      child is dom.Element ? _scanContainer(child) : _processView(child);
+//      child is dynamic ? _scanContainer(child) : _processView(child);
+//    todo, makes an interface for root and for child
     }
   }
 

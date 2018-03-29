@@ -24,9 +24,9 @@ class ContainerBinding extends RLEventDispatcher {
 
   set parent(value) => _parent = value;
 
-  dom.Element _container;
+  dynamic _container;
 
-  dom.Element get container => _container;
+  dynamic get container => _container;
 
   //-----------------------------------
   //
@@ -64,7 +64,7 @@ class ContainerBinding extends RLEventDispatcher {
     }
   }
 
-  void handleView(dom.Element view, Type type) {
+  void handleView(dynamic view, Type type) {
     final int length = _viewHandlers.length;
 
     for (int i = 0; i < length; i++) {

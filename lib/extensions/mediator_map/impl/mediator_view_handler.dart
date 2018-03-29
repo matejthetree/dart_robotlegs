@@ -39,7 +39,7 @@ class MediatorViewHandler {
     _flushCache();
   }
 
-  void handleView(dom.Element view, Type type) {
+  void handleView(dynamic view, Type type) {
     final List interestedMappings = _getInterestedMappingsFor(view, type);
     if (interestedMappings != null)
       _factory.createMediators(view, type, interestedMappings);

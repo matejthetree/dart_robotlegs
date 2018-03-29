@@ -10,7 +10,7 @@ enum ViewManagerEvent{
 }
 
 abstract class IViewManager {
-  List<dom.Element> get containers;
+  List<dynamic> get containers;
 
   void addContainer(dynamic container);
 

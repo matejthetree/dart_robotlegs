@@ -4,9 +4,6 @@ library robotlegs;
 // imports
 //-----------------------------------
 
-import 'dart:async';
-import 'dart:html' as dom;
-
 import 'package:robotlegs_di/robotlegs_di.dart';
 
 part 'bundles/mvcs/command.dart';
@@ -35,6 +32,11 @@ part 'extensions/enhanced_logging/impl/logger_provider.dart';
 part 'extensions/enhanced_logging/impl/print_log_target.dart';
 part 'extensions/enhanced_logging/injectable_logger_extension.dart';
 part 'extensions/enhanced_logging/print_logging_extension.dart';
+part 'extensions/event_command_map/api/i_event_command_map.dart';
+part 'extensions/event_command_map/event_command_map_extension.dart';
+part 'extensions/event_command_map/impl/event_command_map.dart';
+part 'extensions/event_command_map/impl/event_command_trigger.dart';
+part 'extensions/event_dispatcher/event_dispatcher_extension.dart';
 part 'extensions/local_event_map/api/i_event_map.dart';
 part 'extensions/matching/i_type_filter.dart';
 part 'extensions/matching/i_type_matcher.dart';
@@ -57,11 +59,6 @@ part 'extensions/mediator_map/impl/mediator_mapping.dart';
 part 'extensions/mediator_map/impl/mediator_view_handler.dart';
 part 'extensions/mediator_map/impl/null_mediator_unmapper.dart';
 part 'extensions/mediator_map/mediator_map_extension.dart';
-part 'extensions/event_command_map/api/i_event_command_map.dart';
-part 'extensions/event_command_map/impl/event_command_map.dart';
-part 'extensions/event_command_map/impl/event_command_trigger.dart';
-part 'extensions/event_command_map/event_command_map_extension.dart';
-part 'extensions/event_dispatcher/event_dispatcher_extension.dart';
 part 'extensions/view_manager/api/i_view_handler.dart';
 part 'extensions/view_manager/api/i_view_manager.dart';
 part 'extensions/view_manager/impl/container_binding.dart';
@@ -69,7 +66,6 @@ part 'extensions/view_manager/impl/container_registry.dart';
 part 'extensions/view_manager/impl/stage_crawler.dart';
 part 'extensions/view_manager/impl/view_manager.dart';
 part 'extensions/view_manager/stage_crawler_extension.dart';
-//part '../libs_to_extract_into_separate_extensions/stage_observer_extension.dart';
 part 'extensions/view_manager/view_manager_extension.dart';
 part 'extensions/view_processor_map/api/i_view_processor_map.dart';
 part 'extensions/view_processor_map/api/view_processor_map_error.dart';
@@ -91,6 +87,7 @@ part 'extensions/view_processor_map/view_processor_map_extension.dart';
 part 'framework/api/i_bundle.dart';
 part 'framework/api/i_config.dart';
 part 'framework/api/i_context.dart';
+part 'framework/api/i_event_dispatcher.dart';
 part 'framework/api/i_extension.dart';
 part 'framework/api/i_guard.dart';
 part 'framework/api/i_hook.dart';
@@ -102,8 +99,6 @@ part 'framework/api/lifecycle_error.dart';
 part 'framework/api/lifecycle_event.dart';
 part 'framework/api/lifecycle_state.dart';
 part 'framework/api/log_level.dart';
-part 'framework/api/pin_event.dart';
-part 'framework/api/i_event_dispatcher.dart';
 part 'framework/api/type_defs.dart';
 part 'framework/impl/apply_hooks.dart';
 part 'framework/impl/config_manager.dart';
@@ -118,6 +113,7 @@ part 'framework/impl/object_processor.dart';
 part 'framework/impl/pin.dart';
 part 'framework/impl/rl_event_dispatcher.dart';
 part 'framework/impl/robotlegs_injector.dart';
+//part '../libs_to_extract_into_separate_extensions/stage_observer_extension.dart';
 
 //-----------------------------------
 // Bundles

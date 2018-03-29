@@ -32,7 +32,7 @@ class MediatorManager {
   //-----------------------------------
 
   void addMediator(Mediator mediator, dynamic item, IMediatorMapping mapping) {
-    final dom.Element element = item as dom.Element;
+    final dynamic element = item as dynamic;
 
     //TODO: watch element for being removed from DOM
 
@@ -40,7 +40,7 @@ class MediatorManager {
   }
 
   void removeMediator(
-      Mediator mediator, dom.Element item, IMediatorMapping mapping) {
+      Mediator mediator, dynamic item, IMediatorMapping mapping) {
     _destroyMediator(mediator);
   }
 
@@ -50,7 +50,7 @@ class MediatorManager {
   //
   //-----------------------------------
 
-  void _initializeMediator(IMediator mediator, dom.Element mediatedItem) {
+  void _initializeMediator(IMediator mediator, dynamic mediatedItem) {
     // TODO: make calling of non-interface methods optional
     mediator.preInitialize();
 
