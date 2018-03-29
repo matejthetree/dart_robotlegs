@@ -4,6 +4,8 @@ library robotlegs;
 // imports
 //-----------------------------------
 
+import 'dart:collection';
+
 import 'package:robotlegs_di/robotlegs_di.dart';
 
 part 'bundles/mvcs/command.dart';

@@ -9,7 +9,7 @@ class Pin {
   //
   //-----------------------------------
 
-  final Map<dynamic, bool> _instances = new Map<dynamic, bool>();
+  final HashMap<int, bool> _instances = new HashMap<int, bool>();
 
   IEventDispatcher _dispatcher;
 
@@ -28,20 +28,30 @@ class Pin {
   //-----------------------------------
 
   void detain(dynamic instance) {
-    if (_instances[instance] == null) {
-      _instances[instance] = true;
+    if (_instances[instance.hashCode] == null) {
+      _addHashCode(instance.hashCode);
       _dispatcher.dispatchEvent(PinEvent.detain);
     }
   }
 
   void release(dynamic instance) {
-    if (_instances[instance] != null) {
-      _instances.remove(instance);
+    if (_instances[instance.hashCode] != null) {
+      _releaseHashCode(instance.hashCode);
       _dispatcher.dispatchEvent(PinEvent.release);
     }
   }
 
   void releaseAll() {
-    _instances.forEach((dynamic instance, bool pinned) => release(instance));
+    var tempMap = new HashMap<int, bool>()..addAll(_instances);
+    tempMap.forEach((int hashCode, bool value) {
+      _releaseHashCode(hashCode);
+      _dispatcher.dispatchEvent(PinEvent.release);
+    });
+    tempMap.clear();
+    tempMap = null;
   }
+
+  void _releaseHashCode(int hashCode) => _instances.remove(hashCode);
+
+  void _addHashCode(int hashCode) => _instances[hashCode] = true;
 }
